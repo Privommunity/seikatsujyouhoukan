@@ -81,6 +81,11 @@
       font-size: 0.9rem;
       display: none;
     }
+    
+    /* コンテンツを隠す */
+    #content-container {
+      display: none;
+    }
   </style>
   <style>
     :root {
@@ -249,218 +254,221 @@
     </div>
   </div>
   
-  <div class="header">
-    <h1>免許・登録情報</h1>
-  </div>
-  
-  <div class="container">
-    
-    <div class="card">
-      <div class="card-header">
-        <i class="fas fa-building"></i>宅地建物取引業免許
-      </div>
-      <div class="card-body">
-        <div class="info-group">
-          <div class="info-label">免許番号</div>
-          <div class="info-content">
-            <span id="license-number">宮城県知事免許(6)第4823号</span>
-            <button class="copy-btn" data-target="license-number">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-        
-        <div class="info-group">
-          <div class="info-label">免許の有効期間</div>
-          <div class="info-content">
-            <span id="license-period">令和7年6月28日から令和12年6月27日まで</span>
-            <button class="copy-btn" data-target="license-period">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-        
-        <div class="info-group">
-          <div class="info-label">主たる事務所</div>
-          <div class="info-content">
-            <span id="main-office">〒986-0868 石巻市南中里二丁目9番27号</span>
-            <button class="copy-btn" data-target="main-office">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-        
-        <div class="info-group">
-          <div class="info-label">商号</div>
-          <div class="info-content">
-            <span id="company-name">株式会社生活情報館</span>
-            <button class="copy-btn" data-target="company-name">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-        
-        <div class="info-group">
-          <div class="info-label">代表者</div>
-          <div class="info-content">
-            <span id="representative">代表取締役 日下望史</span>
-            <button class="copy-btn" data-target="representative">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-        
-        <div class="info-group">
-          <div class="info-label">電話番号</div>
-          <div class="info-content">
-            <span id="company-phone">0225-93-9111</span>
-            <button class="copy-btn" data-target="company-phone">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-      </div>
+  <div id="content-container">
+    <div class="header">
+      <h1>免許・登録情報</h1>
     </div>
     
-    <div class="card">
-      <div class="card-header">
-        <i class="fas fa-user-tie"></i>宅地建物取引士
-      </div>
-      <div class="card-body">
-        <div class="info-group">
-          <div class="info-label">登録番号</div>
-          <div class="info-content">
-            <span id="agent-reg-number">（宮城）18160号</span>
-            <button class="copy-btn" data-target="agent-reg-number">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-        
-        <div class="info-group">
-          <div class="info-label">氏名</div>
-          <div class="info-content">
-            <span id="agent-name">日下望史</span>
-            <button class="copy-btn" data-target="agent-name">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-        
-        <div class="info-group">
-          <div class="info-label">業務に従事する事務所</div>
-          <div class="info-content">
-            <span id="agent-office">石巻市南中里二丁目9番27号 株式会社生活情報館</span>
-            <button class="copy-btn" data-target="agent-office">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-        
-        <div class="info-group">
-          <div class="info-label">電話番号</div>
-          <div class="info-content">
-            <span id="agent-phone">0225-93-9111</span>
-            <button class="copy-btn" data-target="agent-phone">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="card">
-      <div class="card-header">
-        <i class="fas fa-shield-alt"></i>宅地建物取引業保証協会
-      </div>
-      <div class="card-body">
-        <div class="info-group">
-          <div class="info-label">名称</div>
-          <div class="info-content">
-            <span id="assoc-name">公益社団法人 不動産保証協会</span>
-            <button class="copy-btn" data-target="assoc-name">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-        
-        <div class="info-group">
-          <div class="info-label">住所</div>
-          <div class="info-content">
-            <span id="assoc-address">東京都千代田区紀尾井町3-30 全日会館</span>
-            <button class="copy-btn" data-target="assoc-address">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="card">
-      <div class="card-header">
-        <i class="fas fa-map-marker-alt"></i>宅地建物取引業保証協会の事務所
-      </div>
-      <div class="card-body">
-        <div class="info-group">
-          <div class="info-label">名称</div>
-          <div class="info-content">
-            <span id="branch-name">公益財団法人 不動産保証協会 宮城県本部</span>
-            <button class="copy-btn" data-target="branch-name">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-        
-        <div class="info-group">
-          <div class="info-label">所在地</div>
-          <div class="info-content">
-            <span id="branch-address">宮城県仙台市青葉区上杉一丁目4番1号 全日本不動産宮城会館4階</span>
-            <button class="copy-btn" data-target="branch-address">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="card">
-      <div class="card-header">
-        <i class="fas fa-coins"></i>弁済業務保証金
-      </div>
-      <div class="card-body">
-        <div class="info-group">
-          <div class="info-label">供託所</div>
-          <div class="info-content">
-            <span id="deposit-office">東京法務局</span>
-            <button class="copy-btn" data-target="deposit-office">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-        
-        <div class="info-group">
-          <div class="info-label">住所</div>
-          <div class="info-content">
-            <span id="deposit-address">東京都千代田区九段南1-1-15</span>
-            <button class="copy-btn" data-target="deposit-address">
-              <i class="fas fa-copy"></i>コピー
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <footer>
     <div class="container">
-      <p>株式会社生活情報館 | 最終更新日：<time datetime="2025-05-20">2025年5月20日</time></p>
+      
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-building"></i>宅地建物取引業免許
+        </div>
+        <div class="card-body">
+          <div class="info-group">
+            <div class="info-label">免許番号</div>
+            <div class="info-content">
+              <span id="license-number">宮城県知事免許(6)第4823号</span>
+              <button class="copy-btn" data-target="license-number">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-group">
+            <div class="info-label">免許の有効期間</div>
+            <div class="info-content">
+              <span id="license-period">令和7年6月28日から令和12年6月27日まで</span>
+              <button class="copy-btn" data-target="license-period">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-group">
+            <div class="info-label">主たる事務所</div>
+            <div class="info-content">
+              <span id="main-office">〒986-0868 石巻市南中里二丁目9番27号</span>
+              <button class="copy-btn" data-target="main-office">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-group">
+            <div class="info-label">商号</div>
+            <div class="info-content">
+              <span id="company-name">株式会社生活情報館</span>
+              <button class="copy-btn" data-target="company-name">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-group">
+            <div class="info-label">代表者</div>
+            <div class="info-content">
+              <span id="representative">代表取締役 日下望史</span>
+              <button class="copy-btn" data-target="representative">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-group">
+            <div class="info-label">電話番号</div>
+            <div class="info-content">
+              <span id="company-phone">0225-93-9111</span>
+              <button class="copy-btn" data-target="company-phone">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-user-tie"></i>宅地建物取引士
+        </div>
+        <div class="card-body">
+          <div class="info-group">
+            <div class="info-label">登録番号</div>
+            <div class="info-content">
+              <span id="agent-reg-number">（宮城）18160号</span>
+              <button class="copy-btn" data-target="agent-reg-number">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-group">
+            <div class="info-label">氏名</div>
+            <div class="info-content">
+              <span id="agent-name">日下望史</span>
+              <button class="copy-btn" data-target="agent-name">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-group">
+            <div class="info-label">業務に従事する事務所</div>
+            <div class="info-content">
+              <span id="agent-office">石巻市南中里二丁目9番27号 株式会社生活情報館</span>
+              <button class="copy-btn" data-target="agent-office">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-group">
+            <div class="info-label">電話番号</div>
+            <div class="info-content">
+              <span id="agent-phone">0225-93-9111</span>
+              <button class="copy-btn" data-target="agent-phone">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-shield-alt"></i>宅地建物取引業保証協会
+        </div>
+        <div class="card-body">
+          <div class="info-group">
+            <div class="info-label">名称</div>
+            <div class="info-content">
+              <span id="assoc-name">公益社団法人 不動産保証協会</span>
+              <button class="copy-btn" data-target="assoc-name">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-group">
+            <div class="info-label">住所</div>
+            <div class="info-content">
+              <span id="assoc-address">東京都千代田区紀尾井町3-30 全日会館</span>
+              <button class="copy-btn" data-target="assoc-address">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-map-marker-alt"></i>宅地建物取引業保証協会の事務所
+        </div>
+        <div class="card-body">
+          <div class="info-group">
+            <div class="info-label">名称</div>
+            <div class="info-content">
+              <span id="branch-name">公益財団法人 不動産保証協会 宮城県本部</span>
+              <button class="copy-btn" data-target="branch-name">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-group">
+            <div class="info-label">所在地</div>
+            <div class="info-content">
+              <span id="branch-address">宮城県仙台市青葉区上杉一丁目4番1号 全日本不動産宮城会館4階</span>
+              <button class="copy-btn" data-target="branch-address">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-coins"></i>弁済業務保証金
+        </div>
+        <div class="card-body">
+          <div class="info-group">
+            <div class="info-label">供託所</div>
+            <div class="info-content">
+              <span id="deposit-office">東京法務局</span>
+              <button class="copy-btn" data-target="deposit-office">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-group">
+            <div class="info-label">住所</div>
+            <div class="info-content">
+              <span id="deposit-address">東京都千代田区九段南1-1-15</span>
+              <button class="copy-btn" data-target="deposit-address">
+                <i class="fas fa-copy"></i>コピー
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </footer>
+    
+    <footer>
+      <div class="container">
+        <p>株式会社生活情報館 | 最終更新日：<time datetime="2025-05-20">2025年5月20日</time></p>
+      </div>
+    </footer>
+  </div>
 
   <script>
     // パスコード認証の処理
     document.addEventListener('DOMContentLoaded', function() {
       const authOverlay = document.getElementById('auth-overlay');
+      const contentContainer = document.getElementById('content-container');
       const inputs = document.querySelectorAll('.passcode-input input');
       const submitBtn = document.querySelector('.submit-btn');
       const errorMessage = document.querySelector('.error-message');
@@ -469,6 +477,7 @@
       // ローカルストレージをチェック
       if (localStorage.getItem(authKey) === 'true') {
         authOverlay.style.display = 'none';
+        contentContainer.style.display = 'block'; // コンテンツを表示
         return;
       }
       
@@ -512,19 +521,12 @@
           enteredCode += input.value;
         });
         
-        
-        const yearDiff = 2025 - 1986; 
-        const phoneLastDigit = 1;     
-        
-
-        if (enteredCode[0] == yearDiff % 10 && 
-            enteredCode[1] == (9 - 2) && 
-            enteredCode[2] == (8 - 5) && 
-            enteredCode[3] == (7 + phoneLastDigit + 1)) {
-          
+        // 直接パスコードをチェック - 単純に3739と比較
+        if (enteredCode === '3739') {
           // 認証成功
           localStorage.setItem(authKey, 'true');
           authOverlay.style.display = 'none';
+          contentContainer.style.display = 'block'; // コンテンツを表示
         } else {
           // 認証失敗
           errorMessage.style.display = 'block';
