@@ -512,15 +512,11 @@
           enteredCode += input.value;
         });
         
-        // パスコード検証 (ひねり込みバージョン)
-        const yearDiff = 2025 - 1986; // 法人所在地の郵便番号の下3桁との差分
-        const phoneLastDigit = 1;     // 電話番号の最後の桁
         
-        // すぐに分からない形でパスコードを検証
-        // 3: 石巻市の位置が「南」で数えて3番目の位置
-        // 7: 事務所の住所の番地の十の位
-        // 3: 郵便番号の下一桁から事業所番号の十の位を引いた数
-        // 9: 事務所の番地の一の位と電話番号最後の桁の和
+        const yearDiff = 2025 - 1986; 
+        const phoneLastDigit = 1;     
+        
+
         if (enteredCode[0] == yearDiff % 10 && 
             enteredCode[1] == (9 - 2) && 
             enteredCode[2] == (8 - 5) && 
