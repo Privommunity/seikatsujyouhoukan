@@ -9,6 +9,80 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    #auth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    
+    .auth-container {
+      background-color: white;
+      border-radius: 8px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .auth-title {
+      margin-bottom: 1.5rem;
+      color: #2c3e50;
+      font-size: 1.3rem;
+    }
+    
+    .passcode-input {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .passcode-input input {
+      width: 3rem;
+      height: 3.5rem;
+      text-align: center;
+      font-size: 1.5rem;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+    }
+    
+    .passcode-input input:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+    
+    .submit-btn {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .submit-btn:hover {
+      background-color: #2980b9;
+    }
+    
+    .error-message {
+      color: #e74c3c;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      display: none;
+    }
+  </style>
+  <style>
     :root {
       --primary-color: #2c3e50;
       --secondary-color: #3498db;
@@ -161,6 +235,20 @@
   </style>
 </head>
 <body>
+  <div id="auth-overlay">
+    <div class="auth-container">
+      <div class="auth-title">アクセス認証</div>
+      <div class="passcode-input">
+        <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric">
+        <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric">
+        <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric">
+        <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric">
+      </div>
+      <button class="submit-btn">認証</button>
+      <div class="error-message">パスコードが正しくありません</div>
+    </div>
+  </div>
+  
   <div class="header">
     <h1>免許・登録情報</h1>
   </div>
@@ -242,7 +330,7 @@
         <div class="info-group">
           <div class="info-label">登録番号</div>
           <div class="info-content">
-            <span id="agent-reg-number">（宮城）第18160号</span>
+            <span id="agent-reg-number">（宮城）18160号</span>
             <button class="copy-btn" data-target="agent-reg-number">
               <i class="fas fa-copy"></i>コピー
             </button>
@@ -370,6 +458,96 @@
   </footer>
 
   <script>
+    // パスコード認証の処理
+    document.addEventListener('DOMContentLoaded', function() {
+      const authOverlay = document.getElementById('auth-overlay');
+      const inputs = document.querySelectorAll('.passcode-input input');
+      const submitBtn = document.querySelector('.submit-btn');
+      const errorMessage = document.querySelector('.error-message');
+      const authKey = 'realestate_auth_passed';
+      
+      // ローカルストレージをチェック
+      if (localStorage.getItem(authKey) === 'true') {
+        authOverlay.style.display = 'none';
+        return;
+      }
+      
+      // 各入力フィールドの処理
+      inputs.forEach((input, index) => {
+        // 自動フォーカス移動
+        input.addEventListener('input', function() {
+          if (this.value.length === this.maxLength) {
+            if (index < inputs.length - 1) {
+              inputs[index + 1].focus();
+            } else {
+              submitBtn.focus();
+            }
+          }
+        });
+        
+        // バックスペースの処理
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+            inputs[index - 1].focus();
+          }
+        });
+      });
+      
+      // パスコード認証処理
+      submitBtn.addEventListener('click', validatePasscode);
+      
+      // Enter キーでも認証可能に
+      inputs.forEach(input => {
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            validatePasscode();
+          }
+        });
+      });
+      
+      function validatePasscode() {
+        // 入力値を収集
+        let enteredCode = '';
+        inputs.forEach(input => {
+          enteredCode += input.value;
+        });
+        
+        // パスコード検証 (ひねり込みバージョン)
+        const yearDiff = 2025 - 1986; // 法人所在地の郵便番号の下3桁との差分
+        const phoneLastDigit = 1;     // 電話番号の最後の桁
+        
+        // すぐに分からない形でパスコードを検証
+        // 3: 石巻市の位置が「南」で数えて3番目の位置
+        // 7: 事務所の住所の番地の十の位
+        // 3: 郵便番号の下一桁から事業所番号の十の位を引いた数
+        // 9: 事務所の番地の一の位と電話番号最後の桁の和
+        if (enteredCode[0] == yearDiff % 10 && 
+            enteredCode[1] == (9 - 2) && 
+            enteredCode[2] == (8 - 5) && 
+            enteredCode[3] == (7 + phoneLastDigit + 1)) {
+          
+          // 認証成功
+          localStorage.setItem(authKey, 'true');
+          authOverlay.style.display = 'none';
+        } else {
+          // 認証失敗
+          errorMessage.style.display = 'block';
+          inputs.forEach(input => {
+            input.value = '';
+          });
+          inputs[0].focus();
+          
+          // エラーメッセージを一定時間後に消す
+          setTimeout(() => {
+            errorMessage.style.display = 'none';
+          }, 3000);
+        }
+      }
+      
+      // 最初のフィールドにフォーカス
+      inputs[0].focus();
+    });
+
     document.querySelectorAll('.copy-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const targetId = btn.getAttribute('data-target');
