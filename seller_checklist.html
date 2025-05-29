@@ -8,242 +8,224 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
         @media print {
-            body { font-size: 12px; }
+            body { -webkit-print-color-adjust: exact; }
             .no-print { display: none; }
-            .print-break { page-break-after: always; }
-            .checkbox-print { width: 15px; height: 15px; border: 2px solid #000; display: inline-block; margin-right: 8px; }
-            .checkbox-checked { background-color: #000; }
         }
-        .checkbox-large {
-            width: 20px;
-            height: 20px;
+        .checklist-item {
+            border-left: 4px solid #3b82f6;
+            transition: all 0.2s ease;
+        }
+        .checklist-item.completed {
+            border-left-color: #10b981;
+            background-color: #f0fdf4;
+        }
+        .checkbox-custom {
+            transform: scale(1.2);
         }
     </style>
 </head>
-<body class="bg-gray-50 p-4">
-    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
-        <!-- ヘッダー -->
-        <div class="text-center mb-6 border-b-2 border-gray-200 pb-4">
-            <h1 class="text-2xl font-bold text-gray-800 mb-2">
-                <i class="fas fa-home text-blue-600 mr-2"></i>
-                不動産売買取引 売主準備書類チェックリスト
+<body class="bg-gray-50 font-sans">
+    <div class="max-w-4xl mx-auto p-6 bg-white shadow-lg">
+        <!-- Header -->
+        <header class="text-center mb-8 border-b pb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                <i class="fas fa-home text-blue-600 mr-3"></i>
+                不動産売買取引
             </h1>
-            <p class="text-gray-600">必要書類と手続きを確認してチェックしてください</p>
-        </div>
+            <h2 class="text-2xl text-gray-600">売主準備書類チェックリスト</h2>
+            <p class="text-sm text-gray-500 mt-2">各項目の準備が完了したらチェックしてください</p>
+        </header>
 
-        <!-- 操作ボタン -->
-        <div class="mb-6 flex flex-wrap gap-2 no-print">
-            <button onclick="clearAll()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition duration-200">
-                <i class="fas fa-eraser mr-2"></i>全てクリア
-            </button>
-            <button onclick="window.print()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition duration-200">
-                <i class="fas fa-print mr-2"></i>印刷
-            </button>
-            <button onclick="exportProgress()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition duration-200">
-                <i class="fas fa-download mr-2"></i>進捗保存
-            </button>
-        </div>
-
-        <!-- 必要書類セクション -->
-        <div class="mb-8">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4 bg-blue-100 p-3 rounded">
-                <i class="fas fa-file-alt text-blue-600 mr-2"></i>必要書類
-            </h2>
-            
-            <!-- 売買契約書と同時 -->
-            <div class="mb-6">
-                <h3 class="text-lg font-medium text-gray-700 mb-3 border-l-4 border-blue-400 pl-3">
-                    売買契約書と同時に必要
-                </h3>
-                <div class="space-y-3 ml-4">
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="license_copy" onchange="saveProgress()">
-                        <span class="text-gray-700">運転免許証コピー（有効期限内）</span>
+        <!-- 売買契約書と同時に必要な書類 -->
+        <section class="mb-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-file-contract text-blue-600 mr-2"></i>
+                売買契約書と同時に必要な書類
+            </h3>
+            <div class="space-y-3">
+                <div class="checklist-item bg-blue-50 p-4 rounded-lg" data-item="license">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="checkbox-custom mr-3 text-blue-600" id="license">
+                        <span class="text-gray-800">運転免許証コピー（有効期限内）</span>
                     </label>
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="resident_card" onchange="saveProgress()">
-                        <span class="text-gray-700">住民票（発行から3ヶ月以内）</span>
+                </div>
+                
+                <div class="checklist-item bg-blue-50 p-4 rounded-lg" data-item="residence">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="checkbox-custom mr-3 text-blue-600" id="residence">
+                        <span class="text-gray-800">住民票（発行から3ヶ月以内）</span>
                     </label>
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="seal_certificate" onchange="saveProgress()">
-                        <span class="text-gray-700">印鑑証明書（発行から3ヶ月以内）</span>
+                </div>
+                
+                <div class="checklist-item bg-blue-50 p-4 rounded-lg" data-item="seal">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="checkbox-custom mr-3 text-blue-600" id="seal">
+                        <span class="text-gray-800">印鑑証明書（発行から3ヶ月以内）</span>
                     </label>
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="seal_stamp" onchange="saveProgress()">
-                        <span class="text-gray-700">書類には実印で押印</span>
+                </div>
+                
+                <div class="checklist-item bg-blue-50 p-4 rounded-lg" data-item="stamp">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="checkbox-custom mr-3 text-blue-600" id="stamp">
+                        <span class="text-gray-800">書類には実印で押印</span>
                     </label>
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="bank_account" onchange="saveProgress()">
-                        <span class="text-gray-700">振込先銀行口座の確認（通帳コピー等）</span>
+                </div>
+                
+                <div class="checklist-item bg-blue-50 p-4 rounded-lg" data-item="bank">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="checkbox-custom mr-3 text-blue-600" id="bank">
+                        <span class="text-gray-800">振込先銀行口座の確認（通帳コピー等）</span>
                     </label>
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="keys" onchange="saveProgress()">
-                        <span class="text-gray-700">鍵の引渡し準備（スペアキー含む）（あれば）</span>
+                </div>
+                
+                <div class="checklist-item bg-blue-50 p-4 rounded-lg" data-item="keys">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="checkbox-custom mr-3 text-blue-600" id="keys">
+                        <span class="text-gray-800">鍵の引渡し準備（スペアキー含む）</span>
                     </label>
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="manuals" onchange="saveProgress()">
-                        <span class="text-gray-700">設備の取扱説明書・保証書の準備（あれば）</span>
+                </div>
+                
+                <div class="checklist-item bg-blue-50 p-4 rounded-lg" data-item="manuals">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="checkbox-custom mr-3 text-blue-600" id="manuals">
+                        <span class="text-gray-800">設備の取扱説明書・保証書の準備</span>
                     </label>
                 </div>
             </div>
+        </section>
 
-            <!-- 司法書士送付用 -->
-            <div class="mb-6">
-                <h3 class="text-lg font-medium text-gray-700 mb-3 border-l-4 border-green-400 pl-3">
-                    所有権移転書類と同時（司法書士に送付）
-                </h3>
-                <div class="space-y-3 ml-4">
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="registry_info" onchange="saveProgress()">
-                        <span class="text-gray-700">登記識別情報</span>
+        <!-- 司法書士送付用書類 -->
+        <section class="mb-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-gavel text-green-600 mr-2"></i>
+                司法書士送付用書類
+            </h3>
+            <div class="space-y-3">
+                <div class="checklist-item bg-green-50 p-4 rounded-lg" data-item="registration">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="checkbox-custom mr-3 text-green-600" id="registration">
+                        <span class="text-gray-800">登記識別情報（所有権移転書類と同時に）</span>
                     </label>
                 </div>
             </div>
+        </section>
 
-            <!-- 可及的速やかに -->
-            <div class="mb-6">
-                <h3 class="text-lg font-medium text-gray-700 mb-3 border-l-4 border-red-400 pl-3">
-                    可及的速やかに
-                </h3>
-                <div class="space-y-3 ml-4">
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="tax_notice" onchange="saveProgress()">
-                        <span class="text-gray-700">固定資産税・都市計画税納税通知書（今年度）コピーか写真で撮ったもの</span>
+        <!-- 税務関連書類 -->
+        <section class="mb-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-receipt text-orange-600 mr-2"></i>
+                税務関連書類
+            </h3>
+            <div class="space-y-3">
+                <div class="checklist-item bg-orange-50 p-4 rounded-lg" data-item="tax">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="checkbox-custom mr-3 text-orange-600" id="tax">
+                        <span class="text-gray-800">固定資産税・都市計画税納税通知書（今年度）コピーまたは写真</span>
                     </label>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- その他の手続き -->
-        <div class="mb-8">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4 bg-orange-100 p-3 rounded">
-                <i class="fas fa-cogs text-orange-600 mr-2"></i>その他の手続き
-            </h2>
-            <div class="mb-4">
-                <h3 class="text-lg font-medium text-gray-700 mb-3 border-l-4 border-orange-400 pl-3">
-                    売買代金受領後
-                </h3>
-                <div class="space-y-3 ml-4">
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="utilities_stop" onchange="saveProgress()">
-                        <span class="text-gray-700">電気・ガス・水道の使用停止手続き</span>
-                    </label>
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="internet_cancel" onchange="saveProgress()">
-                        <span class="text-gray-700">インターネット回線の解約手続き</span>
-                    </label>
-                    <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" class="checkbox-large mr-3" data-key="insurance_cancel" onchange="saveProgress()">
-                        <span class="text-gray-700">火災保険の解約手続き</span>
-                    </label>
-                </div>
+        <!-- Progress Summary -->
+        <div class="bg-gray-100 p-4 rounded-lg mb-6">
+            <div class="flex items-center justify-between">
+                <span class="text-gray-700 font-medium">進捗状況:</span>
+                <span id="progress" class="text-lg font-bold text-blue-600">0/9 完了</span>
+            </div>
+            <div class="w-full bg-gray-300 rounded-full h-3 mt-2">
+                <div id="progressBar" class="bg-blue-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
         </div>
 
-        <!-- 進捗表示 -->
-        <div class="mb-6 no-print">
-            <div class="bg-gray-100 p-4 rounded">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-gray-700 font-medium">進捗状況</span>
-                    <span id="progress-text" class="text-blue-600 font-bold">0/11 完了</span>
-                </div>
-                <div class="w-full bg-gray-300 rounded-full h-3">
-                    <div id="progress-bar" class="bg-blue-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- フッター -->
-        <div class="text-center text-gray-500 text-sm border-t pt-4">
-            <p><i class="fas fa-info-circle mr-1"></i>チェック状況は自動的に保存されます</p>
-            <p class="mt-1">最終更新: <span id="last-updated">-</span></p>
-        </div>
+        <!-- Footer -->
+        <footer class="text-center text-sm text-gray-500 border-t pt-4">
+            <p>※ チェック状況は自動的に保存されます</p>
+            <p class="mt-1">作成日: <span id="currentDate"></span></p>
+        </footer>
     </div>
 
     <script>
+        // 現在の日付を表示
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('ja-JP');
+
         // ローカルストレージのキー
-        const STORAGE_KEY = 'real_estate_checklist';
+        const STORAGE_KEY = 'seller_checklist_progress';
 
-        // 進捗を保存
-        function saveProgress() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const progress = {};
-            
-            checkboxes.forEach(checkbox => {
-                if (checkbox.dataset.key) {
-                    progress[checkbox.dataset.key] = checkbox.checked;
-                }
-            });
-            
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-            updateProgressDisplay();
-            updateLastUpdated();
-        }
+        // 全てのチェックボックスを取得
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const progressElement = document.getElementById('progress');
+        const progressBar = document.getElementById('progressBar');
 
-        // 進捗を読み込み
+        // ページ読み込み時に保存されたデータを復元
         function loadProgress() {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                const progress = JSON.parse(saved);
-                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                
-                checkboxes.forEach(checkbox => {
-                    if (checkbox.dataset.key && progress[checkbox.dataset.key]) {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                const checkedItems = JSON.parse(savedData);
+                checkedItems.forEach(itemId => {
+                    const checkbox = document.getElementById(itemId);
+                    if (checkbox) {
                         checkbox.checked = true;
+                        updateItemStyle(checkbox);
                     }
                 });
             }
-            updateProgressDisplay();
+            updateProgress();
         }
 
-        // 進捗表示を更新
-        function updateProgressDisplay() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const total = checkboxes.length;
-            const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
-            const percentage = total > 0 ? Math.round((checked / total) * 100) : 0;
+        // 進捗を保存
+        function saveProgress() {
+            const checkedItems = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkedItems.push(checkbox.id);
+                }
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedItems));
+        }
+
+        // アイテムのスタイルを更新
+        function updateItemStyle(checkbox) {
+            const item = checkbox.closest('.checklist-item');
+            if (checkbox.checked) {
+                item.classList.add('completed');
+            } else {
+                item.classList.remove('completed');
+            }
+        }
+
+        // 進捗状況を更新
+        function updateProgress() {
+            const totalItems = checkboxes.length;
+            const completedItems = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const percentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
             
-            document.getElementById('progress-text').textContent = `${checked}/${total} 完了`;
-            document.getElementById('progress-bar').style.width = `${percentage}%`;
-        }
-
-        // 最終更新時刻を更新
-        function updateLastUpdated() {
-            const now = new Date();
-            const timeString = now.toLocaleString('ja-JP');
-            document.getElementById('last-updated').textContent = timeString;
-        }
-
-        // 全てクリア
-        function clearAll() {
-            if (confirm('全ての進捗をクリアしますか？')) {
-                localStorage.removeItem(STORAGE_KEY);
-                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                checkboxes.forEach(checkbox => checkbox.checked = false);
-                updateProgressDisplay();
-                updateLastUpdated();
+            progressElement.textContent = `${completedItems}/${totalItems} 完了`;
+            progressBar.style.width = `${percentage}%`;
+            
+            // 進捗に応じて色を変更
+            if (percentage === 100) {
+                progressBar.className = 'bg-green-600 h-3 rounded-full transition-all duration-300';
+                progressElement.className = 'text-lg font-bold text-green-600';
+            } else if (percentage >= 50) {
+                progressBar.className = 'bg-blue-600 h-3 rounded-full transition-all duration-300';
+                progressElement.className = 'text-lg font-bold text-blue-600';
+            } else {
+                progressBar.className = 'bg-orange-500 h-3 rounded-full transition-all duration-300';
+                progressElement.className = 'text-lg font-bold text-orange-500';
             }
         }
 
-        // 進捗をエクスポート
-        function exportProgress() {
-            const progress = localStorage.getItem(STORAGE_KEY);
-            if (progress) {
-                const blob = new Blob([progress], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'checklist_progress.json';
-                a.click();
-                URL.revokeObjectURL(url);
-            }
-        }
+        // チェックボックスのイベントリスナーを設定
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                updateItemStyle(this);
+                updateProgress();
+                saveProgress();
+            });
+        });
 
         // ページ読み込み時に実行
-        window.addEventListener('load', function() {
-            loadProgress();
-            updateLastUpdated();
-        });
+        document.addEventListener('DOMContentLoaded', loadProgress);
     </script>
 </body>
 </html>
